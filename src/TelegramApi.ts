@@ -23,4 +23,8 @@ export default class TelegramApi {
     sendMessage(chat_id: Number | String, text: String, parse_mode?: string) {
         this.fetch("sendMessage", { chat_id: chat_id, text: text });
     }
+
+    setWebhook(url: String) {
+        this.fetch("setWebhook", { url: url });
+    }
 }
