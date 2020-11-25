@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node build/app.js",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
