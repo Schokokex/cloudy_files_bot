@@ -2,4 +2,4 @@ applications:
 - name: cloudy-files-bot
   memory: 128M
   routes:
-    cloudy-files-app.eu-gb.mybluemix.net
+  - route: cloudy-files-app.eu-gb.mybluemix.net/
