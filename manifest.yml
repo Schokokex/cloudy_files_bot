@@ -1,0 +1,4 @@
+applications:
+- name: cloudy-files-bot
+  random-route: true
+  memory: 128M
