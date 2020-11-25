@@ -14,7 +14,7 @@ if (process.env.TELEGRAM_BOT_TOKEN) {
   console.error("Set your Bot token with\n\n  TELEGRAM_BOT_TOKEN = ads:ASD \n\n ");
 }
 const api = new TelegramApi(token);
-const db = new FileDatabase(dbUrl);
+// const db = new FileDatabase(dbUrl);
 
 const adminId = process.env.TELEGRAM_ADMIN_ID;
 
@@ -31,7 +31,7 @@ export function devInit() {
     res.send(`<html><body><input id='i'> as ${adminId}</input></body><script>document.getElementById('i').addEventListener('keyup', ev => {if (ev.key === 'Enter') {fetch('?msg='+ev.target.value); ev.target.value=''}});</script></html>`);
     //TODO remove start
     if (msg) {
-      api.sendMessage(adminId, String(msg));
+      api.sendMessage(adminId, String(msg)).catch(console.error);
     }
     //TODO remove end
   });
@@ -39,7 +39,8 @@ export function devInit() {
 
 
 app.post('/', (req, res) => {
-  api.sendMessage(adminId, inspect(req));
+  console.log(`api.sendMessage(${adminId}, ${inspect(req)})`)
+  api.sendMessage(adminId, inspect(req, true, 2)).catch(console.error);
   res.send("");
 })
 

@@ -13,22 +13,23 @@ export default class TelegramApi {
         this.token = token;
     }
 
-    private fetch(methodName: String, params: Object) {
+    private async fetch(methodName: String, params: Object) {
         return axios({
             url: baseUrl + this.token + '/' + methodName,
-            params: params
+            params: params,
+            method: 'POST'
         });
     }
 
-    sendMessage(chat_id: Number | String, text: String, parse_mode?: string) {
-        this.fetch("sendMessage", { chat_id: chat_id, text: text });
+    async sendMessage(chat_id: Number | String, text: String, parse_mode?: string) {
+        return this.fetch("sendMessage", { chat_id: chat_id, text: text });
     }
 
-    setWebhook(url: String) {
-        this.fetch("setWebhook", { url: url });
+    async setWebhook(url: String) {
+        return this.fetch("setWebhook", { url: url });
     }
 
-    getWebhookInfo() {
-        this.fetch("getWebhookInfo",{});
+    async getWebhookInfo() {
+        return this.fetch("getWebhookInfo",{});
     }
 }
