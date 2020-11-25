@@ -1,7 +1,7 @@
 import express from 'express';
 import TelegramApi from './TelegramApi';
 import FileDatabase from './FileDatabase';
-
+import { inspect } from 'util';
 
 const app = express();
 const port = 8080;
@@ -30,7 +30,7 @@ export function devInit() {
     console.log(String(msg));
     res.send(`<html><body><input id='i'> as ${adminId}</input></body><script>document.getElementById('i').addEventListener('keyup', ev => {if (ev.key === 'Enter') {fetch('?msg='+ev.target.value); ev.target.value=''}});</script></html>`);
     //TODO remove start
-    if (msg){
+    if (msg) {
       api.sendMessage(adminId, String(msg));
     }
     //TODO remove end
@@ -39,7 +39,7 @@ export function devInit() {
 
 
 app.post('/', (req, res) => {
-  api.sendMessage(adminId, JSON.stringify(req));
+  api.sendMessage(adminId, inspect(req));
   res.send("");
 })
 
