@@ -1,3 +1,4 @@
+source_me.sh
 node_modules/
 package-lock.json
 build/
