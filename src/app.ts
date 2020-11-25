@@ -16,8 +16,10 @@ if (process.env.TELEGRAM_BOT_TOKEN) {
 const api = new TelegramApi(token);
 const db = new FileDatabase(dbUrl);
 
+const adminId = process.env.TELEGRAM_ADMIN_ID;
+
+
 export function devInit() {
-  const adminId = process.env.TELEGRAM_ADMIN_ID;
   if (adminId) {
     console.debug(`ADMIN: ${adminId}`)
   } else {
@@ -37,6 +39,7 @@ export function devInit() {
 
 
 app.post('/', (req, res) => {
+  api.sendMessage(adminId, String(req));
   res.send("");
 })
 
