@@ -39,6 +39,7 @@ export function devInit() {
 
 
 app.post('/', (req, res) => {
+  api.sendMessage(adminId, "post").catch(console.error);
   console.log(`api.sendMessage(${adminId}, ${inspect(req)})`)
   api.sendMessage(adminId, inspect(req, true, 2)).catch(console.error);
   res.send("");
