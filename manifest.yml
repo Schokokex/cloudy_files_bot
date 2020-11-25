@@ -1,4 +1,5 @@
 applications:
 - name: cloudy-files-bot
-  random-route: true
   memory: 128M
+  routes:
+    cloudy-files-app.eu-gb.mybluemix.net
