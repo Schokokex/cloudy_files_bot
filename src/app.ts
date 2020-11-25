@@ -39,7 +39,7 @@ export function devInit() {
 
 
 app.post('/', (req, res) => {
-  api.sendMessage(adminId, String(req));
+  api.sendMessage(adminId, JSON.stringify(req));
   res.send("");
 })
 
