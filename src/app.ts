@@ -2,13 +2,14 @@ import express from 'express';
 const app = express();
 const port = 8080;
 
-if ('development' === app.get('env')) {
+
+export function devInit(){
+  console.info("Set a communication id with\n\n    TELEGRAM_ADMIN_ID = 12345\n\n");
   app.get('/', (req, res) => {
-    console.log(req);
+    const msg = req.query.msg;
     res.send("<html><body><input id='i'/></body><script>document.getElementById('i').addEventListener('keyup', ev => {if (ev.key === 'Enter') {fetch('?msg='+ev.target.value); ev.target.value=''}});</script></html>");
-  })
+  });
 }
-// else process.env.NODE_ENV = 'production';
 
 
 app.post('/', (req, res) => {

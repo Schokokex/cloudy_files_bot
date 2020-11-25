@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/app.js",
     "build": "npx tsc",
-    "local": "npx ts-node src/app.ts"
+    "local": "npx ts-node -e 'require(\"./src/app.ts\").devInit()'"
   },
   "repository": {
     "type": "git",
