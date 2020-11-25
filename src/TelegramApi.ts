@@ -27,4 +27,8 @@ export default class TelegramApi {
     setWebhook(url: String) {
         this.fetch("setWebhook", { url: url });
     }
+
+    getWebhookInfo() {
+        this.fetch("getWebhookInfo",{});
+    }
 }
