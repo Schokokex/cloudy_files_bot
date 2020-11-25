@@ -1,10 +1,15 @@
-const express = require('express');
+import express from 'express';
 const app = express();
 const port = 8080;
 
-app.get('/', (req, res) => {
-  res.send('Hello Browser!');
-})
+if ('development' === app.get('env')) {
+  app.get('/', (req, res) => {
+    console.log(req);
+    res.send('<html><body><input id="in"></input></body><script>const $$ = document.getElementById; $$("in").addEventListener("keyup", ev => {if (ev.keyCode === 13) fetch("?msg="+$$("in").value)});</script></html>');
+  })
+}
+// else process.env.NODE_ENV = 'production';
+
 
 app.post('/', (req, res) => {
   res.send("");
