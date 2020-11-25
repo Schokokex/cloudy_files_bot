@@ -1,9 +1,13 @@
-const express = require('express')
-const app = express()
-const port = 8080
+const express = require('express');
+const app = express();
+const port = 8080;
+
+app.get('/', (req, res) => {
+  res.send('Hello Browser!');
+})
 
 app.post('/', (req, res) => {
-  res.send('Hello World!')
+  res.send("");
 })
 
 app.listen(port, () => {
