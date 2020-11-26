@@ -1,8 +1,6 @@
-import { Http2ServerRequest } from "http2";
-
-import https from 'https';
-import url from 'url';
-import axios from 'axios';
+import FormData from "form-data";
+import { request } from 'https';
+import { createReadStream } from "fs";
 
 const baseUrl = 'https://api.telegram.org/bot';
 
@@ -14,22 +12,31 @@ export default class TelegramApi {
     }
 
     private async fetch(methodName: String, params: Object) {
-        return axios({
-            url: baseUrl + this.token + '/' + methodName,
-            params: params,
-            method: 'POST'
-        });
+        const form = new FormData();
+        for (const key in params) {
+            form.append(key, params[key]);
+        }
+        return new Promise((resolve, rej) => {
+            form.pipe(request({
+                host: baseUrl + this.token,
+                path: '/' + methodName,
+                method: 'POST',
+                headers: form.getHeaders(),
+            }, resolve));
+        })
     }
 
     async sendMessage(chat_id: Number | String, text: String, parse_mode?: string) {
         return this.fetch("sendMessage", { chat_id: chat_id, text: text });
     }
 
-    async setWebhook(url: String) {
-        return this.fetch("setWebhook", { url: url });
+    async setWebhook(url: String, certificatePath?: string) {
+        return certificatePath
+            && this.fetch("setWebhook", { url: url, certificate: createReadStream(certificatePath) })
+            || this.fetch("setWebhook", { url: url });
     }
 
     async getWebhookInfo() {
-        return this.fetch("getWebhookInfo",{});
+        return this.fetch("getWebhookInfo", {});
     }
 }

@@ -1,22 +1,32 @@
 import express from 'express';
+import { inspect } from 'util';
+import { exec }  from 'child_process';
 import TelegramApi from './TelegramApi';
 import FileDatabase from './FileDatabase';
-import { inspect } from 'util';
+import createCert from './createCert';
+import fs from 'fs';
 
-const app = express();
-const port = 8080;
 const token = process.env.TELEGRAM_BOT_TOKEN;
+const port = process.env.WEBHOOK_PORT;
 const dbUrl = process.env.IBM_SQL_URL;
+const adminId = process.env.TELEGRAM_ADMIN_ID;
 
-if (process.env.TELEGRAM_BOT_TOKEN) {
-  console.debug(`TOKEN: ${process.env.TELEGRAM_BOT_TOKEN}`)
+
+
+if (token) {
+  console.debug(`TOKEN: ${token}`)
 } else {
   console.error("Set your Bot token with\n\n  TELEGRAM_BOT_TOKEN = ads:ASD \n\n ");
 }
+
 const api = new TelegramApi(token);
+const app = express();
+const certs = createCert("commonName", "jj22.de");
+fs.writeFileSync('./public.pem', certs.public);
+api.setWebhook("jj22.de", './public.pem')
 // const db = new FileDatabase(dbUrl);
 
-const adminId = process.env.TELEGRAM_ADMIN_ID;
+
 
 
 export function devInit() {
@@ -44,6 +54,8 @@ app.post('/', (req, res) => {
   api.sendMessage(adminId, inspect(req, true, 2)).catch(console.error);
   res.send("");
 })
+
+https.createServer()
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
