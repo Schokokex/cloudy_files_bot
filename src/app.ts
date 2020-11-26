@@ -2,8 +2,8 @@ import express from 'express';
 import { inspect } from 'util';
 import { exec } from 'child_process';
 import TelegramApi from './TelegramApi';
-import FileDatabase from './FileDatabase';
 import createCert from './createCert';
+import FileDatabase from './FileDatabase';
 import fs from 'fs';
 import https from 'https';
 
@@ -23,10 +23,10 @@ if (token) {
 
 const api = new TelegramApi(token);
 const app = express();
-const certs = createCert("commonName", url);
+const certs = createCert("jj22.de");
 
 fs.writeFileSync('./public.pem', certs.public);
-api.setWebhook(url, './public.pem')
+api.setWebhook("jj22.de", './public.pem')
 // const db = new FileDatabase(dbUrl);
 
 

@@ -1,4 +1,4 @@
 import selfsigned from 'selfsigned';
-export default function createCert(name, address){
-    return selfsigned.generate([{ name: name, value: address }], { days: 365 });
+export default function createCert(url){
+    return selfsigned.generate([{ name: "commonName", value: url }], { days: 365 });
 }
