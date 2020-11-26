@@ -1,1 +1,1 @@
-docker run -it -e TELEGRAM_BOT_TOKEN=öö -e TELEGRAM_ADMIN_ID=123 -e WEBHOOK_URL=jj22.de -e WEBHOOK_PORT=8443 -e GIT_URL=https://github.com/Schokokex/cloudy_files_bot -e IBM_SQL=12 -e APP_NAME=testApp jochnickel/nodets
+docker run -it -e TELEGRAM_BOT_TOKEN=öö -e TELEGRAM_ADMIN_ID=123 -e WEBHOOK_URL=jj22.de -e WEBHOOK_PORT=8443 -e GIT_URL=https://github.com/Schokokex/cloudy_files_bot -e IBM_SQL_URL=12 -e APP_NAME=testApp jochnickel/nodets

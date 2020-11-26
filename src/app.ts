@@ -1,13 +1,15 @@
 import express from 'express';
 import { inspect } from 'util';
-import { exec }  from 'child_process';
+import { exec } from 'child_process';
 import TelegramApi from './TelegramApi';
 import FileDatabase from './FileDatabase';
 import createCert from './createCert';
 import fs from 'fs';
+import https from 'https';
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const port = process.env.WEBHOOK_PORT;
+const url = process.env.WEBHOOK_URL;
 const dbUrl = process.env.IBM_SQL_URL;
 const adminId = process.env.TELEGRAM_ADMIN_ID;
 
@@ -21,9 +23,10 @@ if (token) {
 
 const api = new TelegramApi(token);
 const app = express();
-const certs = createCert("commonName", "jj22.de");
+const certs = createCert("commonName", url);
+
 fs.writeFileSync('./public.pem', certs.public);
-api.setWebhook("jj22.de", './public.pem')
+api.setWebhook(url, './public.pem')
 // const db = new FileDatabase(dbUrl);
 
 
@@ -55,8 +58,7 @@ app.post('/', (req, res) => {
   res.send("");
 })
 
-https.createServer()
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+const server = https.createServer({ key: certs.private, cert: certs.cert }, app)
+  .listen(port, () => {
+    console.log(`Express server listening on port ${port}`);
+  });
