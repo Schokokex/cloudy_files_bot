@@ -28,7 +28,7 @@ const certs = createCert("jj22.de");
 api.sendMessage(adminId, "hi")
 
 fs.writeFileSync('./public.pem', certs.public);
-api.setWebhook("jj22.de").catch(console.error)
+api.setWebhook("jj22.de", './YOURPUBLIC.pem').then(()=>console.log("certificate uploaded")).catch(console.error)
 // const db = new FileDatabase(dbUrl);
 
 
@@ -60,6 +60,7 @@ app.post('/', (req, res) => {
   res.send("");
 })
 
-app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
-});
+const server = https.createServer({ key: fs.readFileSync("./YOURPRIVATE.pem")}, app)
+  .listen(port, () => {
+    console.log(`Express server listening on port ${port}`);
+  });
