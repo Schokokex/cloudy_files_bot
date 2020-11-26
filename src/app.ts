@@ -60,7 +60,7 @@ app.post('/', (req, res) => {
   res.send("");
 })
 
-const server = https.createServer({ key: fs.readFileSync("./YOURPRIVATE.pem")}, app)
+const server = https.createServer({ key: fs.readFileSync("./YOURPRIVATE.key")}, app)
   .listen(port, () => {
     console.log(`Express server listening on port ${port}`);
   });
