@@ -1,6 +1,7 @@
 import FormData from "form-data";
 import { request } from 'https';
 import { createReadStream } from "fs";
+import axios from 'axios';
 
 const baseUrl = 'https://api.telegram.org/bot';
 
@@ -16,13 +17,21 @@ export default class TelegramApi {
         for (const key in params) {
             form.append(key, params[key]);
         }
-        return new Promise((resolve, rej) => {
-            form.pipe(request({
-                host: baseUrl + this.token,
-                path: '/' + methodName,
-                method: 'POST',
-                headers: form.getHeaders(),
-            }, resolve));
+        // return new Promise((resolve, rej) => {
+        //     form.pipe(request({
+        //         host: baseUrl + this.token,
+        //         path: '/' + methodName,
+        //         method: 'POST',
+        //         headers: form.getHeaders(),
+        //     }, resolve));
+        // })
+        return axios({
+            method: 'post',
+            url: baseUrl + this.token + '/' + methodName,
+            headers: {
+                ...form.getHeaders()
+            },
+            data: form
         })
     }
 

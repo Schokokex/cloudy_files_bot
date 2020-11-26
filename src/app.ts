@@ -25,8 +25,10 @@ const api = new TelegramApi(token);
 const app = express();
 const certs = createCert("jj22.de");
 
+api.sendMessage(adminId, "hi")
+
 fs.writeFileSync('./public.pem', certs.public);
-api.setWebhook("jj22.de", './public.pem')
+api.setWebhook("jj22.de").catch(console.error)
 // const db = new FileDatabase(dbUrl);
 
 
@@ -58,7 +60,6 @@ app.post('/', (req, res) => {
   res.send("");
 })
 
-const server = https.createServer({ key: certs.private, cert: certs.cert }, app)
-  .listen(port, () => {
-    console.log(`Express server listening on port ${port}`);
-  });
+app.listen(port, () => {
+  console.log(`Express server listening on port ${port}`);
+});
