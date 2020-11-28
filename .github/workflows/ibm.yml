@@ -34,5 +34,5 @@ jobs:
         run: ibmcloud target --cf-api https://api.eu-gb.cf.cloud.ibm.com -o schokokex -s dev
         shell: bash
       - name: Deploy to Cloud Foundry
-        run: ibmcloud cf push
+        run: ibmcloud cf push cloudy-files-bot-py
         shell: bash
