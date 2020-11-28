@@ -37,7 +37,8 @@ try:
     main.fs.msgAdmin = msgAdmin
     
     @app.route('/', methods=['POST'])
-    def lambda_handler(event, context):
+    def lambda_handler():
+        event = request.json
         try:
             if 'body' in event:
                 body = json.loads(event['body'])
@@ -83,6 +84,6 @@ try:
             errorAdmin()
             
     if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=port, debug=True)
+        app.run(host='0.0.0.0', port=8080, debug=True)
 except:
     errorAdmin()
