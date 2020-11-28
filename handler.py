@@ -1,3 +1,4 @@
+from flask import Flask, render_template, request, jsonify
 import json
 import os
 import requests
@@ -6,6 +7,9 @@ import urllib.parse
 
 ADMIN = '452549370'
 TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+
+
+app = Flask(__name__, static_url_path='')
 
 
 def errorAdmin():
@@ -32,6 +36,7 @@ try:
     main.api.msgAdmin = msgAdmin
     main.fs.msgAdmin = msgAdmin
     
+    @app.route('/', methods=['POST'])
     def lambda_handler(event, context):
         try:
             if 'body' in event:
@@ -73,7 +78,11 @@ try:
                 msgAdmin("unknown lambda event")
                 msgAdmin(event)
             return {'statusCode': 200}
+                
         except:
             errorAdmin()
+            
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=port, debug=True)
 except:
     errorAdmin()
