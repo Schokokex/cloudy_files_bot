@@ -38,47 +38,28 @@ try:
     
     @app.route('/', methods=['POST'])
     def lambda_handler():
-        event = request.json
+        body = request.json
         try:
-            if 'body' in event:
-                body = json.loads(event['body'])
-                # msgAdmin("haandler")
-                #msgAdmin(body)
 
-                if 'callback_query' in body:
-                    callback_query = body['callback_query']
-                    main.handleCallbackQuery(callback_query)
+            if 'callback_query' in body:
+                callback_query = body['callback_query']
+                main.handleCallbackQuery(callback_query)
 
-                elif 'message' in body:
-                    message = body['message']
-                    main.handleMessage(message)
-                    
-                elif 'channel_post' in body:
-                    channel_post = body['channel_post']
-                    
-                elif 'edited_channel_post' in body:
-                    edited_channel_post = body['edited_channel_post']
-                    
-                else:
-                    msgAdmin("unknown lambda body")
-                    msgAdmin(body)
-                    
-            elif 'Records' in event:
-                records = event['Records']
-                for r in records:
-                    if 'Sns' in r:
-                        sns = r['Sns']
-                        message = 'Message' in sns and sns['Message']
-                        subject = 'Subject' in sns and sns['Subject']
-                        msgAdmin("SNS (%s):\n%s"%(subject, message))
-                    else:
-                        msgAdmin("unknown lambda record")
-                        msgAdmin(event)
-                        
+            elif 'message' in body:
+                message = body['message']
+                main.handleMessage(message)
+
+            elif 'channel_post' in body:
+                channel_post = body['channel_post']
+
+            elif 'edited_channel_post' in body:
+                edited_channel_post = body['edited_channel_post']
+
             else:
-                msgAdmin("unknown lambda event")
-                msgAdmin(event)
-            return {'statusCode': 200}
+                msgAdmin("unknown handler json")
+                msgAdmin(body)
+
+            return jsonify({})
                 
         except:
             errorAdmin()
