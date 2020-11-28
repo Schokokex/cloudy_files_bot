@@ -55,6 +55,9 @@ try:
             elif 'edited_channel_post' in body:
                 edited_channel_post = body['edited_channel_post']
 
+            elif 'inline_query' in body:
+                inline_query = body['inline_query']
+
             else:
                 msgAdmin("unknown handler json")
                 msgAdmin(body)
